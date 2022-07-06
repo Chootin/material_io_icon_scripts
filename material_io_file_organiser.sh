@@ -40,9 +40,17 @@ function move_file() {
     local type_directory="$6"
     local type_prefix="$7"
 
-    input_file="$input_directory$category/$icon/$type_directory/$dp/$scale/$type_prefix""_$icon""_$colour""_$dp.png"
+    input_file_path="$input_directory$category/$icon/$type_directory/$dp/$scale/"
+    input_file="$input_file_path""$type_prefix""_$icon""_$colour""_$dp.png"
+
+    if [ ! -d  $input_file_path ]; then
+        old_input_file="$input_file"
+        input_file_path="$input_directory$category/$icon/${type_directories[0]}/$dp/$scale/"
+        input_file="$input_file_path${type_prefix_array[0]}""_$icon""_$colour""_$dp.png"
+    fi
+
     output_file="$output_directory$type_prefix/$category/$icon/$icon""_$px.png"
-    echo "Moving file: $input_file -> $output_file"
+    echo "Copying file: $input_file -> $output_file"
     output_file_directory=`dirname $output_file`
     mkdir -p $output_file_directory
     cp $input_file $output_file
